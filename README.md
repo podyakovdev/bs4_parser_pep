@@ -3,16 +3,19 @@
 ## Режимы работы парсера:
 
  - whats-new
+Выводит ссылку на статью "What’s New In Python" редактора, автора последних версий Python
  - latest-versions
-### Скачивает актуальную версию документации
+Выводит список последних версий Python и их статус
  - download
+Скачивает актуальную версию документации
  - pep
+Считает количество статусов на всех PEP, сравнивает их значение на главное странице и в карточке PEP
+
 
 ## Опциональные аргументы
-###  -h, --help            show this help message and exit
-###  -c, --clear-cache     Очистка кеша
-###  -o {pretty,file}, --output {pretty,file}
-###                        Дополнительные способы вывода данных
+####  -h, --help            show this help message and exit
+####  -c, --clear-cache     Очистка кеша
+####  -o {pretty,file}, --output {pretty,file}
 
 
 ## Установка:
@@ -25,3 +28,5 @@
 `source venv/bin/activate` - для MacOS / Linux
 ### Установите зависимости:
 `pip install -r requirements.txt`
+### Запустите парсер:
+`python src/main.py [mode]`
