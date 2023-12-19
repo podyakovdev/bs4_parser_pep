@@ -9,10 +9,10 @@
  - pep
 
 ## Опциональные аргументы
-###  -h, --help            show this help message and exit
-###  -c, --clear-cache     Очистка кеша
-###  -o {pretty,file}, --output {pretty,file}
-###                        Дополнительные способы вывода данных
+####  -h, --help            show this help message and exit
+####  -c, --clear-cache     Очистка кеша
+####  -o {pretty,file}, --output {pretty,file}
+####                        Дополнительные способы вывода данных
 
 
 ## Установка:
