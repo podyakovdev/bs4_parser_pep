@@ -28,3 +28,5 @@
 `source venv/bin/activate` - для MacOS / Linux
 ### Установите зависимости:
 `pip install -r requirements.txt`
+### Запустите парсер:
+`python src/main.py [mode]`
