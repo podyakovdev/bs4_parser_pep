@@ -18,3 +18,12 @@ EXPECTED_STATUS = {
         'W': ('Withdrawn',),
         '': ('Draft', 'Active'),
 }
+
+WHATS_NEW_RESULTS = [('Ссылка на статью', 'Заголовок', 'Редактор, Автор'), ]
+
+LATEST_VERSIONS_RESULTS = [('Ссылка на документацию', 'Версия', 'Статус')]
+LATEST_VERSIONS_PATTERN = r'Python (?P<version>\d\.\d+) \((?P<status>.*)\)'
+
+PEP_RESULTS = [('Статус', 'Количество')]
+
+DOWNLOAD_FILE_NAME = 'download.html'

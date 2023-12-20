@@ -7,7 +7,9 @@ from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 from configs import configure_argument_parser, configure_logging
-from constants import BASE_DIR, MAIN_DOC_URL, PEP_URL
+from constants import (BASE_DIR, DOWNLOAD_FILE_NAME, LATEST_VERSIONS_PATTERN,
+                       LATEST_VERSIONS_RESULTS, MAIN_DOC_URL, PEP_RESULTS,
+                       PEP_URL, WHATS_NEW_RESULTS)
 from outputs import control_output
 from utils import (find_tag, get_response, get_table1, get_table2,
                    logging_deferences)
@@ -26,7 +28,7 @@ def whats_new(session):
     sections_by_python = div_with_ul.find_all(
         'li', attrs={'class': 'toctree-l1'}
     )
-    results = [('Ссылка на статью', 'Заголовок', 'Редактор, Автор'), ]
+    results = WHATS_NEW_RESULTS[:]
     for section in tqdm(sections_by_python):
         version_a_tag = section.find('a')
         version_link = urljoin(WHATS_NEW_URL, version_a_tag['href'])
@@ -52,14 +54,12 @@ def latest_versions(session):
     sidebar = find_tag(soup, 'div', {'class': 'sphinxsidebarwrapper'})
     ul_tags = sidebar.find_all('ul')
     for ul in ul_tags:
-        if 'All versions' in ul.text:
-            a_tags = ul.find_all('a')
-            break
-    else:
-        raise Exception('Не найден список c версиями Python')
+        if 'All versions' not in ul.text:
+            raise Exception('Не найден список c версиями Python')
+        a_tags = ul.find_all('a')
 
-    results = [('Ссылка на документацию', 'Версия', 'Статус')]
-    pattern = r'Python (?P<version>\d\.\d+) \((?P<status>.*)\)'
+    results = LATEST_VERSIONS_RESULTS[:]
+    pattern = LATEST_VERSIONS_PATTERN
     for a_tag in a_tags:
         link = a_tag['href']
         text_match = re.search(pattern, a_tag.text)
@@ -75,7 +75,7 @@ def latest_versions(session):
 
 def download(session):
 
-    downloads_url = urljoin(MAIN_DOC_URL, 'download.html')
+    downloads_url = urljoin(MAIN_DOC_URL, DOWNLOAD_FILE_NAME)
     response = get_response(session, downloads_url)
     if response is None:
         return
@@ -112,7 +112,7 @@ def pep(session):
     table2, list_of_hrefs = get_table2(soup, list_of_versions)
 
     # Сохраним необходимые строки для csv:
-    results = [('Статус', 'Количество')]
+    results = PEP_RESULTS[:]
     for status in tqdm(set(table2.values())):
         count = list(table2.values()).count(status)
         results.append(
